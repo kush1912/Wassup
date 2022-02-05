@@ -13,3 +13,12 @@ app.get('/',(req,res)=>{
 http.listen(PORT, ()=>{
     console.log(`Listening on port ${PORT}`);
 })
+
+//Socket
+const io = require('socket.io')(http) // so that the socket will know which server to work upon
+io.on('connection',(socket)=>{
+    console.log('Connected...');
+    socket.on('message',(msg)=>{
+        socket.broadcast.emit('message',msg);
+    })
+})
